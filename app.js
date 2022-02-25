@@ -68,8 +68,8 @@ app.post("/", (req, res) => {
         })
     }
     else if (req.body.res == '/') {
-        var result = (n1 / n2);
-        var output = BigInt(result);
+        var output = (n1 / n2);
+        // var output = BigInt(result);
         res.send('Result:' + output);
         var pg = "Insert into cal(first_no, second_no, res ,ope ,time_inserted) values('" + req.body.num1 + "', '" + req.body.num2 + "', '" + output + "', '" + req.body.res + "', current_timestamp )";
         client.query(pg, function (err, result) {
