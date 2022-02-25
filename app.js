@@ -1,6 +1,9 @@
 const client = require('./connection.js')
 const express = require('express')
 const bodyparser = require('body-parser')
+// GLOBAL.document = new JSDOM(html).window.document;
+// const jsdom = require("jsdom");
+// const { JSDOM } = jsdom;
 const app = express();
 client.connect();
 app.set("view engine", "ejs")
@@ -15,8 +18,11 @@ app.post("/", (req, res) => {
     var n1 = Number(req.body.num1);
     var n2 = Number(req.body.num2);
     if (req.body.res == '+') {
-        var output = n1 + n2;
+        var result = n1 + n2;
+        var output = BigInt(result);
         res.send('Result:' + output);
+
+        // output = document.write(result.toPrecision());
         var pg = "Insert into cal(first_no, second_no, res ,ope ,time_inserted) values('" + req.body.num1 + "', '" + req.body.num2 + "', '" + output + "', '" + req.body.res + "', current_timestamp )";
         client.query(pg, function (err, result) {
             if (!err) {
@@ -31,7 +37,8 @@ app.post("/", (req, res) => {
     }
 
     else if (req.body.res == '-') {
-        var output = n1 - n2;
+        var result = n1 - n2;
+        var output = BigInt(result);
         res.send('Result:' + output);
         var pg = "Insert into cal(first_no, second_no, res ,ope ,time_inserted) values('" + req.body.num1 + "', '" + req.body.num2 + "', '" + output + "', '" + req.body.res + "', current_timestamp )";
         client.query(pg, function (err, result) {
@@ -46,7 +53,8 @@ app.post("/", (req, res) => {
 
     }
     else if (req.body.res == '*') {
-        var output = n1 * n2;
+        var result = n1 * n2;
+        var output = BigInt(result);
         res.send('Result:' + output);
         var pg = "Insert into cal(first_no, second_no, res ,ope ,time_inserted) values('" + req.body.num1 + "', '" + req.body.num2 + "', '" + output + "', '" + req.body.res + "', current_timestamp )";
         client.query(pg, function (err, result) {
@@ -60,7 +68,8 @@ app.post("/", (req, res) => {
         })
     }
     else if (req.body.res == '/') {
-        var output = (n1 / n2);
+        var result = (n1 / n2);
+        var output = BigInt(result);
         res.send('Result:' + output);
         var pg = "Insert into cal(first_no, second_no, res ,ope ,time_inserted) values('" + req.body.num1 + "', '" + req.body.num2 + "', '" + output + "', '" + req.body.res + "', current_timestamp )";
         client.query(pg, function (err, result) {
@@ -77,7 +86,8 @@ app.post("/", (req, res) => {
 
     }
     else if (req.body.res == '%') {
-        var output = n1 % n2;
+        var result = n1 % n2;
+        var output = BigInt(result);
         res.send('Result:' + output);
         var pg = "Insert into cal(first_no, second_no, res ,ope ,time_inserted) values('" + req.body.num1 + "', '" + req.body.num2 + "', '" + output + "', '" + req.body.res + "', current_timestamp )";
         client.query(pg, function (err, result) {
